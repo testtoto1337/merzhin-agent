@@ -1,4 +1,4 @@
-module github.com/Ne0nd0g/merlin-agent
+module github.com/testtoto1337/merzhin-agent
 
 go 1.16
 
@@ -7,7 +7,7 @@ require (
 	github.com/CUCyber/ja3transport v0.0.0-20201031204932-8a22ac8ab5d7 // indirect
 	github.com/Ne0nd0g/go-clr v1.0.2
 	github.com/Ne0nd0g/ja3transport v0.0.0-20200203013218-e81e31892d84
-	github.com/Ne0nd0g/merlin v1.3.0
+	github.com/testtoto1337/merzhin v1.3.0
 	github.com/cretz/gopaque v0.1.0
 	github.com/fatih/color v1.10.0
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
