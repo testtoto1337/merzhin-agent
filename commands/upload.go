@@ -26,10 +26,10 @@ import (
 	"io/ioutil"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/cli"
 )
 
 // Upload receives a job from the server to upload a file from the host to the Merlin server

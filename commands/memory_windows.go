@@ -28,11 +28,11 @@ import (
 	"strings"
 
 	// Merlin
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
-	"github.com/Ne0nd0g/merlin-agent/os/windows/pkg/evasion"
+	"github.com/testtoto1337/merzhin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/os/windows/pkg/evasion"
 )
 
 // Memory is a handler for working with virtual memory on the host operating system

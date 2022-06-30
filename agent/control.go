@@ -26,12 +26,12 @@ import (
 	"time"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
-	"github.com/Ne0nd0g/merlin/pkg/messages"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/messages"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
-	"github.com/Ne0nd0g/merlin-agent/core"
+	"github.com/testtoto1337/merzhin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/core"
 )
 
 // control makes configuration changes to the agent
@@ -106,7 +106,7 @@ func (a *Agent) control(job jobs.Job) {
 	if results.Stderr != "" {
 		jobsOut <- jobs.Job{
 			ID:      job.ID,
-			AgentID: a.ID,
+			AID: a.ID,
 			Token:   job.Token,
 			Type:    jobs.RESULT,
 			Payload: results,
@@ -124,7 +124,7 @@ func (a *Agent) control(job jobs.Job) {
 
 	aInfo := jobs.Job{
 		ID:      job.ID,
-		AgentID: a.ID,
+		AID: a.ID,
 		Token:   job.Token,
 		Type:    jobs.AGENTINFO,
 	}

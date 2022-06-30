@@ -30,10 +30,10 @@ import (
 	"golang.org/x/sys/unix"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/cli"
 )
 
 // Memfd places a linux executable file in-memory, executes it, and returns the results

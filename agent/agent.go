@@ -32,13 +32,13 @@ import (
 	"github.com/satori/go.uuid"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/messages"
+	"github.com/testtoto1337/merzhin/pkg/messages"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
-	"github.com/Ne0nd0g/merlin-agent/clients"
-	"github.com/Ne0nd0g/merlin-agent/core"
-	merlinOS "github.com/Ne0nd0g/merlin-agent/os"
+	"github.com/testtoto1337/merzhin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/clients"
+	"github.com/testtoto1337/merzhin-agent/core"
+	merlinOS "github.com/testtoto1337/merzhin-agent/os"
 )
 
 // GLOBAL VARIABLES

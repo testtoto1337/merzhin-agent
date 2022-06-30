@@ -36,8 +36,8 @@ import (
 	"golang.org/x/sys/windows"
 
 	// Sub Repositories
-	"github.com/Ne0nd0g/merlin-agent/os/windows/pkg/pipes"
-	"github.com/Ne0nd0g/merlin-agent/os/windows/pkg/tokens"
+	"github.com/testtoto1337/merzhin-agent/os/windows/pkg/pipes"
+	"github.com/testtoto1337/merzhin-agent/os/windows/pkg/tokens"
 )
 
 const (

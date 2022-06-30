@@ -24,7 +24,7 @@ import (
 	"strings"
 
 	// Merlin
-	"github.com/Ne0nd0g/merlin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/cli"
 )
 
 // env is used to view or modify a host's environment variables

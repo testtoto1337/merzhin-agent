@@ -27,13 +27,13 @@ import (
 	"math/rand"
 
 	// Merlin
-	"github.com/Ne0nd0g/merlin/pkg/core"
-	"github.com/Ne0nd0g/merlin/pkg/messages"
-	"github.com/Ne0nd0g/merlin/pkg/opaque"
+	"github.com/testtoto1337/merzhin/pkg/core"
+	"github.com/testtoto1337/merzhin/pkg/messages"
+	"github.com/testtoto1337/merzhin/pkg/opaque"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
-	o "github.com/Ne0nd0g/merlin-agent/crypto/opaque"
+	"github.com/testtoto1337/merzhin-agent/cli"
+	o "github.com/testtoto1337/merzhin-agent/crypto/opaque"
 )
 
 // opaqueAuth is the top-level function that subsequently runs OPAQUE registration and authentication
@@ -78,7 +78,7 @@ func (client *Client) opaqueRegister() error {
 	cli.Message(cli.NOTE, "Starting OPAQUE Registration")
 
 	msg := messages.Base{
-		ID:   client.AgentID,
+		ID:   client.AID,
 		Type: messages.OPAQUE,
 	}
 
@@ -94,7 +94,7 @@ func (client *Client) opaqueRegister() error {
 
 	if client.opaque == nil {
 		// Build OPAQUE RegInit message
-		msg.Payload, client.opaque, err = o.UserRegisterInit(client.AgentID)
+		msg.Payload, client.opaque, err = o.UserRegisterInit(client.AID)
 		if err != nil {
 			return fmt.Errorf("there was an error creating the OPAQUE User Registration Initialization message:\r\n%s", err)
 		}
@@ -106,8 +106,8 @@ func (client *Client) opaqueRegister() error {
 			return fmt.Errorf("there was an error sending the OPAQUE User Registration Initialization message to the server:\r\n%s", err)
 		}
 		// Verify the message is for this agent
-		if msg.ID != client.AgentID {
-			return fmt.Errorf("message ID %s does not match agent ID %s", msg.ID, client.AgentID)
+		if msg.ID != client.AID {
+			return fmt.Errorf("message ID %s does not match agent ID %s", msg.ID, client.AID)
 		}
 		// Verify the payload type is correct
 		if msg.Type != messages.OPAQUE {
@@ -135,8 +135,8 @@ func (client *Client) opaqueRegister() error {
 		return fmt.Errorf("there was an error sending the OPAQUE User Registration Complete message to the server:\r\n%s", err)
 	}
 	// Verify the message is for this agent
-	if msg.ID != client.AgentID {
-		return fmt.Errorf("message ID %s does not match agent ID %s", msg.ID, client.AgentID)
+	if msg.ID != client.AID {
+		return fmt.Errorf("message ID %s does not match agent ID %s", msg.ID, client.AID)
 	}
 	// Verify the payload type is correct
 	if msg.Type != messages.OPAQUE {
@@ -156,7 +156,7 @@ func (client *Client) opaqueAuthenticate() (messages.Base, error) {
 	cli.Message(cli.NOTE, "Starting OPAQUE Authentication")
 
 	msg := messages.Base{
-		ID:   client.AgentID,
+		ID:   client.AID,
 		Type: messages.OPAQUE,
 	}
 	if client.PaddingMax > 0 {
@@ -170,7 +170,7 @@ func (client *Client) opaqueAuthenticate() (messages.Base, error) {
 	}
 
 	// Build AuthInit message
-	payload, err := o.UserAuthenticateInit(client.AgentID, client.opaque)
+	payload, err := o.UserAuthenticateInit(client.AID, client.opaque)
 	if err != nil {
 		return msg, fmt.Errorf("there was an error building the OPAQUE Authentication Initialization message:\r\n%s", err)
 	}
@@ -182,8 +182,8 @@ func (client *Client) opaqueAuthenticate() (messages.Base, error) {
 		return msg, fmt.Errorf("there was an error sending the OPAQUE User Authentication Initialization message to the server:\r\n%s", err)
 	}
 	// Verify the message is for this agent
-	if msg.ID != client.AgentID {
-		return msg, fmt.Errorf("message ID %s does not match agent ID %s", msg.ID, client.AgentID)
+	if msg.ID != client.AID {
+		return msg, fmt.Errorf("message ID %s does not match agent ID %s", msg.ID, client.AID)
 	}
 	// Verify the payload type is correct
 	if msg.Type != messages.OPAQUE {

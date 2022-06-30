@@ -31,11 +31,11 @@ import (
 	"golang.org/x/crypto/pbkdf2"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/opaque"
+	"github.com/testtoto1337/merzhin/pkg/opaque"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
-	"github.com/Ne0nd0g/merlin/pkg/core"
+	"github.com/testtoto1337/merzhin-agent/cli"
+	"github.com/testtoto1337/merzhin/pkg/core"
 )
 
 // User is the structure that holds information for the various steps of the OPAQUE protocol as the user
@@ -48,15 +48,15 @@ type User struct {
 }
 
 // UserRegisterInit is used to perform the OPAQUE Password Authenticated Key Exchange (PAKE) protocol Registration steps for the user
-func UserRegisterInit(AgentID uuid.UUID) (opaque.Opaque, *User, error) {
+func UserRegisterInit(AID uuid.UUID) (opaque.Opaque, *User, error) {
 	cli.Message(cli.DEBUG, "Entering into opaque.UserRegisterInit...")
 	var user User
 	// Generate a random password and run it through 5000 iterations of PBKDF2; Used with OPAQUE
 	x := core.RandStringBytesMaskImprSrc(30)
-	user.pwdU = pbkdf2.Key([]byte(x), AgentID.Bytes(), 5000, 32, sha256.New)
+	user.pwdU = pbkdf2.Key([]byte(x), AID.Bytes(), 5000, 32, sha256.New)
 
 	// Build OPAQUE User Registration Initialization
-	user.reg = gopaque.NewUserRegister(gopaque.CryptoDefault, AgentID.Bytes(), nil)
+	user.reg = gopaque.NewUserRegister(gopaque.CryptoDefault, AID.Bytes(), nil)
 	userRegInit := user.reg.Init(user.pwdU)
 
 	cli.Message(cli.DEBUG, fmt.Sprintf("OPAQUE UserID: %x", userRegInit.UserID))
@@ -121,12 +121,12 @@ func UserRegisterComplete(regInitResp opaque.Opaque, user *User) (opaque.Opaque,
 }
 
 // UserAuthenticateInit is used to authenticate an agent leveraging the OPAQUE Password Authenticated Key Exchange (PAKE) protocol
-func UserAuthenticateInit(AgentID uuid.UUID, user *User) (opaque.Opaque, error) {
+func UserAuthenticateInit(AID uuid.UUID, user *User) (opaque.Opaque, error) {
 	cli.Message(cli.DEBUG, "Entering into opaque.UserAuthenticateInit...")
 
 	// 1 - Create a NewUserAuth with an embedded key exchange
 	user.Kex = gopaque.NewKeyExchangeSigma(gopaque.CryptoDefault)
-	user.auth = gopaque.NewUserAuth(gopaque.CryptoDefault, AgentID.Bytes(), user.Kex)
+	user.auth = gopaque.NewUserAuth(gopaque.CryptoDefault, AID.Bytes(), user.Kex)
 
 	// 2 - Call Init with the password and send the resulting UserAuthInit to the server
 	userAuthInit, err := user.auth.Init(user.pwdU)

@@ -24,8 +24,8 @@ import (
 	"golang.org/x/sys/windows"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
-	"github.com/Ne0nd0g/merlin-agent/os/windows/pkg/tokens"
+	"github.com/testtoto1337/merzhin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/os/windows/pkg/tokens"
 )
 
 // Setup is used to prepare the environment or context for subsequent commands and is specific to each operating system

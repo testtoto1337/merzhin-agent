@@ -22,7 +22,7 @@ package commands
 
 import (
 	// Merlin
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
 )
 
 // Memory is a handler for working with virtual memory on the host operating system

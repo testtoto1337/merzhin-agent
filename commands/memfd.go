@@ -25,7 +25,7 @@ import (
 	"runtime"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
 )
 
 // Memfd places a linux executable file in-memory, executes it, and returns the results

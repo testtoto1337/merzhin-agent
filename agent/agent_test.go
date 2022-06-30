@@ -23,11 +23,11 @@ import (
 	"time"
 
 	// Merlin Main
-	"github.com/Ne0nd0g/merlin/pkg/messages"
+	"github.com/testtoto1337/merzhin/pkg/messages"
 
 	// Merlin
-	merlinHTTP "github.com/Ne0nd0g/merlin-agent/clients/http"
-	testserver "github.com/Ne0nd0g/merlin-agent/test/server"
+	merlinHTTP "github.com/testtoto1337/merzhin-agent/clients/http"
+	testserver "github.com/testtoto1337/merzhin-agent/test/server"
 )
 
 var agentConfig = Config{
@@ -61,7 +61,7 @@ func TestNewAgentClient(t *testing.T) {
 
 	// Setup Client Config
 	config := clientConfig
-	config.AgentID = a.ID
+	config.AID = a.ID
 	config.UserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1"
 	config.JA3 = "771,49192-49191-49172-49171-159-158-57-51-157-156-61-60-53-47-49196-49195-49188-49187-49162-49161-106-64-56-50,0-10-11-13-23-65281,23-24,0"
 	config.Host = "fake.cloudfront.net"
@@ -82,7 +82,7 @@ func TestNewHTTPClient(t *testing.T) {
 
 	// Client config
 	config := clientConfig
-	config.AgentID = a.ID
+	config.AID = a.ID
 	config.Protocol = "http"
 
 	// Get the client
@@ -101,7 +101,7 @@ func TestNewHTTPSClient(t *testing.T) {
 
 	// Client config
 	config := clientConfig
-	config.AgentID = a.ID
+	config.AID = a.ID
 	config.Protocol = "https"
 
 	// Get the client
@@ -120,7 +120,7 @@ func TestNewH2CClient(t *testing.T) {
 
 	// Client config
 	config := clientConfig
-	config.AgentID = a.ID
+	config.AID = a.ID
 	config.Protocol = "h2c"
 
 	// Get the client
@@ -139,7 +139,7 @@ func TestNewH2Client(t *testing.T) {
 
 	// Client config
 	config := clientConfig
-	config.AgentID = a.ID
+	config.AID = a.ID
 	config.Protocol = "h2"
 
 	// Get the client
@@ -158,7 +158,7 @@ func TestNewHTTP3Client(t *testing.T) {
 
 	// Client config
 	config := clientConfig
-	config.AgentID = a.ID
+	config.AID = a.ID
 	config.Protocol = "http3"
 
 	// Get the client
@@ -176,7 +176,7 @@ func TestPSK(t *testing.T) {
 	}
 	// Get the client
 	config := clientConfig
-	config.AgentID = a.ID
+	config.AID = a.ID
 
 	a.Client, err = merlinHTTP.New(config)
 	if err != nil {
@@ -221,7 +221,7 @@ func TestOPAQUE(t *testing.T) {
 
 	// Get the client
 	config := clientConfig
-	config.AgentID = a.ID
+	config.AID = a.ID
 	config.URL = []string{"https://127.0.0.1:8082"}
 	if a.Client, err = merlinHTTP.New(clientConfig); err != nil {
 		t.Error(err)
@@ -253,7 +253,7 @@ func TestAgentInitialCheckIn(t *testing.T) {
 
 	// Get the client
 	config := clientConfig
-	config.AgentID = a.ID
+	config.AID = a.ID
 	config.URL = []string{"https://127.0.0.1:8083/merlin"}
 	a.Client, err = merlinHTTP.New(config)
 	if err != nil {
@@ -287,7 +287,7 @@ func TestBadAuthentication(t *testing.T) {
 
 	// Get the client
 	config := clientConfig
-	config.AgentID = a.ID
+	config.AID = a.ID
 	config.URL = []string{"https://127.0.0.1:8085"}
 	config.PSK = "neverGonnaGiveYouUp"
 	a.Client, err = merlinHTTP.New(config)

@@ -24,10 +24,10 @@ import (
 	"fmt"
 
 	// Merlin
-	"github.com/Ne0nd0g/merlin/pkg/jobs"
+	"github.com/testtoto1337/merzhin/pkg/jobs"
 
 	// Internal
-	"github.com/Ne0nd0g/merlin-agent/cli"
+	"github.com/testtoto1337/merzhin-agent/cli"
 )
 
 // Token is the entrypoint for Jobs that are processed to determine which Token function should be executed
